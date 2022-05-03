@@ -13,46 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: npm install && npm run build
-    
+    - run: npm install
+    - run: npm test
+    - run: npm run build
     - uses: actions/upload-artifact@v3
       with:
         name: dist
         path: dist/teste-actions
         retention-days: 1
-        
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
 
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Checkout gh-pages branch
-      run: |
-        git fetch
-        git branch
-        git checkout gh-pages
-        
-    - name: Delete old files
-      run: |
-        ls -l
-        rm * -rf
-        ls -l
-    
-    - uses: actions/download-artifact@v3.0.0
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
-        name: dist
-        path: .
-        
-    - name: Commit new files
-      run: |
-        ls -l
-        git status
-        
-
-
-    - name: Autocommit the changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Add deploy files
+        branch: gh-pages
+        folder: dist/teste-actions      
