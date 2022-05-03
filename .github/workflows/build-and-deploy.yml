@@ -1,5 +1,7 @@
 
 name: Build and deploy
+permissions:
+  contents: write
 
 on:
   push:
@@ -11,32 +13,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: npm install && npm run build
-    
+    - run: npm install
+    - run: npm test
+    - run: npm run build
     - uses: actions/upload-artifact@v3
       with:
         name: dist
-        path: dist
+        path: dist/teste-actions
         retention-days: 1
-        
-  deploy:
-    runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v3
-    - name: Checkout gh-pages branch
-      run: |
-        git fetch
-        git branch
-        git checkout gh-pages
-    - run: ls -l
-    - uses: actions/download-artifact@v3.0.0
+    - name: Deploy 🚀
+      uses: JamesIves/github-pages-deploy-action@v4.3.3
       with:
-        name: dist
-        path: .
-        
-    - name: Commit files
-      run: |
-        git config --local user.email "andreneves3@gmail.com"
-        git config --local user.name "github-actions[bot]"
-        git commit -m "Add deploy files" -a
+        branch: gh-pages
+        folder: dist/teste-actions      
