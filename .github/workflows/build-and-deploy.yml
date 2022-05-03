@@ -51,3 +51,4 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add .
         git commit -m "Add deploy files" -a
+        git push
