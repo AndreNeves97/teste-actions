@@ -24,8 +24,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - run: git branch
-    - run: git checkout gh-pages
+    - name: Checkout gh-pages branch
+      run: |
+        git fetch
+        git branch
+        git checkout gh-pages
     - run: ls -l
     - uses: actions/download-artifact@v3.0.0
       with:
