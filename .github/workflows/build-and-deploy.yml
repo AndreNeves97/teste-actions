@@ -34,7 +34,7 @@ jobs:
     - name: Delete old files
       run: |
         ls -l
-        rm !(.git) -rf
+        rm * -rf
     
     - uses: actions/download-artifact@v3.0.0
       with:
